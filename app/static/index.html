@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Справочная по сделкам биржи</title>
+<meta name="description" content="Ответы на вопросы о сделках товарно-сырьевой биржи на русском и узбекском. Каждая цифра посчитана по реестру.">
+<meta name="theme-color" content="#2251A3">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.1.6/purify.min.js"></script>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='9' fill='%232251A3'/><path d='M8 21l5-6 4 3 6-8' stroke='white' stroke-width='2.8' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<style>
+:root{
+  --bg:#F2F5FA; --card:#FFFFFF; --ink:#14213D; --ink2:#4A5671; --muted:#7D879C; --line:#E1E6EF;
+  --brand:#2251A3; --brand2:#3A6FD8; --brand-soft:#E8EEFB; --ok:#0F8F8C; --ok-soft:#E0F4F3; --bad:#B4432B; --bad-soft:#FBEAE6;
+  --bubble:#2251A3; --code:#F5F7FB; --sh:0 1px 2px rgba(20,33,61,.06),0 10px 30px -16px rgba(20,33,61,.25);
+  --sans:Onest,system-ui,-apple-system,sans-serif; --mono:'JetBrains Mono',ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0D1424; --card:#151F35; --ink:#E8EDF7; --ink2:#B3BED3; --muted:#8390A8; --line:#25324C;
+  --brand:#6F98EE; --brand2:#86A9F2; --brand-soft:#1B2A49; --ok:#4CC7C2; --ok-soft:#113134; --bad:#E58069; --bad-soft:#3A1F1A;
+  --bubble:#2F5DB8; --code:#101a2e; --sh:0 1px 2px rgba(0,0,0,.3),0 12px 30px -16px rgba(0,0,0,.7)}}
+*{box-sizing:border-box} html,body{margin:0} [hidden]{display:none!important}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--sans);font-feature-settings:"tnum" 1;-webkit-font-smoothing:antialiased;min-height:100vh;display:flex;flex-direction:column}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px;border-radius:6px}
+.bar{position:sticky;top:0;z-index:10;display:flex;align-items:center;gap:12px;padding:10px clamp(14px,4vw,32px);background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
+.logo{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;flex:none;box-shadow:0 4px 12px -4px rgba(34,81,163,.6)}
+.who{line-height:1.2}.who b{font-weight:600;font-size:15px;display:block}
+.who span{font-size:12.5px;color:var(--ok);display:inline-flex;align-items:center;gap:6px}
+.who span::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px var(--ok-soft)}
+.grow{flex:1}
+.pillbtn{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 13px;font-size:13.5px;color:var(--ink2);display:inline-flex;align-items:center;gap:6px}
+.pillbtn:hover{color:var(--brand);border-color:var(--brand)}
+.tg{text-decoration:none;color:#229ED9;border-color:#229ED9}.tg:hover{background:#229ED9;color:#fff!important}
+.hello p.tgline{margin:18px auto 0;max-width:none;text-align:center}.tgline a{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;background:rgba(34,158,217,.1);border:1px solid rgba(34,158,217,.35);color:#229ED9;text-decoration:none;font-weight:500;font-size:14.5px;line-height:1.3;text-align:left}.tgline a:hover{background:#229ED9;color:#fff}.tgline svg{flex:none}.tgline a:hover{text-decoration:underline}
+.seg{display:flex;background:var(--bg);border-radius:999px;padding:3px;border:1px solid var(--line)}
+.seg button{border:0;background:none;padding:4px 11px;border-radius:999px;font-size:13px;color:var(--ink2)}
+.seg button[aria-pressed=true]{background:var(--brand);color:#fff;font-weight:600}
+.tape{overflow:hidden;white-space:nowrap;font-size:13px;background:var(--card);border-bottom:1px solid var(--line);-webkit-mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent);mask-image:linear-gradient(90deg,transparent,#000 4%,#000 96%,transparent)}
+.track{display:inline-flex;gap:28px;padding:8px 0;animation:run 140s linear infinite}
+.tape:hover .track{animation-play-state:paused}
+.ti b{font-weight:600}.ti em{font-style:normal;color:var(--brand);margin-left:6px;font-weight:500}.ti span{color:var(--muted);margin-left:6px}
+@keyframes run{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.track{animation:none}}
+main{flex:1;width:100%;max-width:860px;margin:0 auto;padding:clamp(24px,5vw,48px) clamp(14px,4vw,24px) 190px}
+.hello{text-align:center;margin:clamp(8px,4vh,40px) 0 28px}
+.hello .big{width:64px;height:64px;border-radius:20px;margin:0 auto 18px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;box-shadow:0 14px 30px -12px rgba(34,81,163,.7)}
+.hello h1{font-size:clamp(26px,4.2vw,36px);line-height:1.15;letter-spacing:-.02em;margin:0 0 10px;font-weight:700}
+.hello p{color:var(--ink2);margin:0 auto;max-width:52ch;font-size:16px}
+.stats{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+.stats span{background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:13px;color:var(--ink2)}
+.stats b{color:var(--ink);font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:28px}
+.card{display:flex;gap:12px;align-items:flex-start;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;box-shadow:var(--sh);transition:transform .12s,border-color .12s}
+.card:hover{transform:translateY(-2px);border-color:var(--brand)}
+.card i{flex:none;width:36px;height:36px;border-radius:11px;display:grid;place-items:center;background:var(--brand-soft);color:var(--brand)}
+.card.no i{background:var(--bad-soft);color:var(--bad)}
+.card small{display:block;color:var(--muted);font-size:12.5px;margin-bottom:2px}
+.card div{font-size:14.5px;line-height:1.4;color:var(--ink)}
+.msg{display:flex;gap:10px;margin:0 0 22px;animation:in .25s ease-out}
+@keyframes in{from{opacity:0;transform:translateY(6px)}}
+@media (prefers-reduced-motion:reduce){.msg{animation:none}}
+.msg.me{justify-content:flex-end}
+.me .bub{background:var(--bubble);color:#fff;border-radius:18px 18px 4px 18px;padding:10px 15px;max-width:min(80%,560px);white-space:pre-wrap;font-size:15.5px;box-shadow:var(--sh)}
+.ava{flex:none;width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand2));display:grid;place-items:center;margin-top:2px}
+.ans{flex:1;min-width:0;background:var(--card);border:1px solid var(--line);border-radius:4px 18px 18px 18px;padding:16px 20px 14px;box-shadow:var(--sh)}
+.ans.bad{border-color:var(--bad);background:var(--bad-soft)}
+.steps{list-style:none;margin:0;padding:0;font-size:14px;color:var(--ink2)}
+.steps.fin{margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.steps li{display:flex;align-items:center;gap:9px;padding:3px 0}
+.steps li .st{width:18px;height:18px;flex:none;display:grid;place-items:center}
+.spin{width:15px;height:15px;border-radius:50%;border:2px solid var(--line);border-top-color:var(--brand);animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(1turn)}}
+.steps li.done{color:var(--muted)} .steps li.done .st{color:var(--ok)}
+.md{font-size:15.5px}
+.md>p:first-child{font-size:17px;line-height:1.45;margin-top:0}
+.md p{margin:.5em 0}.md ul,.md ol{margin:.5em 0;padding-left:1.25em}.md li{margin:.2em 0}
+.md strong{font-weight:600}
+.md em{font-style:normal;color:var(--muted);font-size:13.5px}
+.md table{border-collapse:collapse;margin:10px 0;font-size:14px;display:block;overflow-x:auto;max-width:100%}
+.md th{text-align:left;font-weight:600;color:var(--ink2);background:var(--bg);padding:7px 12px;white-space:nowrap}
+.md th:first-child{border-radius:8px 0 0 8px}.md th:last-child{border-radius:0 8px 8px 0}
+.md td{padding:7px 12px;border-bottom:1px solid var(--line)}
+.md td:not(:first-child),.md th:not(:first-child){text-align:right}
+.md code{font:13px var(--mono);background:var(--code);padding:1px 5px;border-radius:5px}
+.chart{margin:14px 0 4px;padding:14px 16px;background:var(--bg);border-radius:14px}
+.chart h5{margin:0 0 10px;font-size:13px;font-weight:500;color:var(--muted)}
+.row{display:grid;grid-template-columns:minmax(70px,34%) 1fr auto;gap:10px;align-items:center;font-size:13px;padding:3px 0}
+.row .l{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink2)}
+.row .b{height:10px;border-radius:6px;background:linear-gradient(90deg,var(--brand),var(--brand2));transform-origin:left;animation:grow .6s ease-out both}
+@keyframes grow{from{transform:scaleX(0)}}
+@media (prefers-reduced-motion:reduce){.row .b{animation:none}}
+.row .v{font-weight:600;white-space:nowrap}
+.tools{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.seal{display:inline-flex;align-items:center;gap:6px;color:var(--ok);background:var(--ok-soft);border-radius:999px;padding:4px 10px;font-weight:500}
+.tbtn{border:0;background:none;color:var(--ink2);padding:4px 8px;border-radius:8px;display:inline-flex;align-items:center;gap:5px;font-size:13px}
+.tbtn:hover{background:var(--bg);color:var(--brand)}
+.sugg{display:flex;flex-wrap:wrap;gap:8px;margin:-8px 0 24px 42px}
+.sugg button{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 14px;font-size:14px;color:var(--brand);box-shadow:var(--sh);text-align:left}
+.sugg button:hover{border-color:var(--brand);background:var(--brand-soft)}
+.appendix{margin-top:10px}
+.q{margin:10px 0;padding:12px;border-radius:12px;background:var(--bg)}
+.q h4{margin:0 0 6px;font-size:13px;font-weight:600;color:var(--ink2)}.q h4 span{font-weight:400;color:var(--muted)}
+.q pre{margin:0;font:12.5px/1.55 var(--mono);white-space:pre-wrap;word-break:break-word;max-height:220px;overflow:auto}
+.rt{overflow-x:auto;margin-top:8px}.rt table{border-collapse:collapse;font-size:12.5px}
+.rt th{text-align:left;color:var(--muted);font-weight:500;padding:3px 14px 3px 0;white-space:nowrap}
+.rt td{padding:3px 14px 3px 0;white-space:nowrap;border-top:1px solid var(--line)}
+.rt small{color:var(--muted);font-size:12px}
+.err{color:var(--bad);font-size:13px}
+.dock{position:fixed;left:0;right:0;bottom:0;padding:14px clamp(14px,4vw,24px) calc(14px + env(safe-area-inset-bottom));background:linear-gradient(to top,var(--bg) 70%,transparent);z-index:5}
+.box{max-width:812px;margin:0 auto;display:flex;align-items:flex-end;gap:8px;background:var(--card);border:1.5px solid var(--line);border-radius:22px;padding:7px 7px 7px 18px;box-shadow:0 12px 34px -14px rgba(20,33,61,.35)}
+.box:focus-within{border-color:var(--brand)}
+.box textarea{flex:1;border:0;outline:0;background:none;resize:none;font:inherit;font-size:16px;color:var(--ink);padding:9px 0;max-height:160px;line-height:1.4}
+.box textarea::placeholder{color:var(--muted)}
+.send{flex:none;width:42px;height:42px;border-radius:50%;border:0;background:var(--brand);color:#fff;display:grid;place-items:center;transition:transform .1s}
+.send:active{transform:scale(.94)}
+.send:disabled{opacity:.4}
+.hint{max-width:812px;margin:7px auto 0;text-align:center;color:var(--muted);font-size:12px}
+@media (max-width:620px){.cards{grid-template-columns:1fr}.who span{display:none}.pillbtn .t{display:none}.sugg{margin-left:0}.ava{display:none}.ans{border-radius:18px}.hint{display:none}}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="logo" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 32 32"><path d="M5 23l7-8 6 4 9-12" stroke="#fff" stroke-width="3.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+  <div class="who"><b data-t="brand"></b><span data-t="online"></span></div>
+  <div class="grow"></div>
+  <button class="pillbtn" id="reset" hidden><svg width="14" height="14" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v10M3 8h10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg><span class="t" data-t="new"></span></button>
+  <a class="pillbtn tg" href="https://t.me/zenc_ai" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.9 4.3c.3-1.2-.9-2.2-2-1.7L2.8 9.2c-1.2.5-1.1 2.2.1 2.6l4.3 1.4 1.7 5.3c.3 1 1.6 1.3 2.3.5l2.4-2.5 4.4 3.2c.9.7 2.2.2 2.5-.9l1.4-14.5zM9.6 13.4l7.6-6.1c.3-.2.6.2.4.4l-6.1 6.3-.3 2.9-1.6-3.5z"/></svg><span class="t">Telegram</span></a>
+  <div class="seg" role="group" aria-label="Language"><button data-l="ru">Рус</button><button data-l="uz">Oʻzb</button><button data-l="uzc">Ўзб</button></div>
+</header>
+<div class="tape" aria-hidden="true"><div class="track" id="track"></div></div>
+<main>
+  <section id="hello" class="hello">
+    <div class="big" aria-hidden="true"><svg width="30" height="30" viewBox="0 0 32 32"><path d="M5 23l7-8 6 4 9-12" stroke="#fff" stroke-width="3.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <h1 data-t="h1"></h1>
+    <p data-t="lede"></p>
+    <div class="stats" id="stats"></div>
+    <p class="tgline"><a href="https://t.me/zenc_ai" target="_blank" rel="noopener"><svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.9 4.3c.3-1.2-.9-2.2-2-1.7L2.8 9.2c-1.2.5-1.1 2.2.1 2.6l4.3 1.4 1.7 5.3c.3 1 1.6 1.3 2.3.5l2.4-2.5 4.4 3.2c.9.7 2.2.2 2.5-.9l1.4-14.5zM9.6 13.4l7.6-6.1c.3-.2.6.2.4.4l-6.1 6.3-.3 2.9-1.6-3.5z"/></svg><span data-t="tg"></span></a></p>
+    <div class="cards" id="cards"></div>
+  </section>
+  <section id="chat" aria-live="polite"></section>
+</main>
+<div class="dock">
+  <form class="box" id="form">
+    <textarea id="q" rows="1" maxlength="2000" aria-label="Вопрос"></textarea>
+    <button class="send" id="send" aria-label="Отправить"><svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 16V4M4.5 9.5L10 4l5.5 5.5" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  </form>
+  <div class="hint" data-t="hint"></div>
+</div>
+<script>
+const IC = {
+  vol:'<svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 16V9M10 16V4M16 16v-5"/></svg>',
+  price:'<svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 14l4.5-4.5 3 3L17 6"/><path d="M12.5 6H17v4.5"/></svg>',
+  people:'<svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="7.5" cy="7" r="2.8"/><path d="M2.5 16c.6-2.6 2.6-4 5-4s4.4 1.4 5 4"/><path d="M13 4.5a2.6 2.6 0 010 5M15 12.3c1.3.5 2.2 1.8 2.5 3.7"/></svg>',
+  deal:'<svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="12" height="14" rx="2"/><path d="M7 7h6M7 10h6M7 13h3"/></svg>',
+  no:'<svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="10" cy="10" r="7"/><path d="M10 6.5v4M10 13.5v.1"/></svg>',
+  ok:'<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 8.5l3 3 6-7"/></svg>',
+  copy:'<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="5" width="8.5" height="8.5" rx="2"/><path d="M10.5 3H4a1.5 1.5 0 00-1.5 1.5V11"/></svg>',
+  code:'<svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 4.5L2 8l3.5 3.5M10.5 4.5L14 8l-3.5 3.5"/></svg>',
+  logo:'<svg width="15" height="15" viewBox="0 0 32 32"><path d="M5 23l7-8 6 4 9-12" stroke="#fff" stroke-width="3.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+};
+const T = {
+ru:{tg:"Удобнее в Telegram? Тот же аналитик в боте @zenc_ai",brand:"Аналитик сделок биржи",online:"на связи, считает по реестру",new:"Новый чат",
+ h1:"Привет! Спросите о сделках биржи",lede:"Посчитаю объёмы, цены, участников и брокеров за 2022–2026 годы и покажу, откуда каждая цифра. Пишите как удобно, хоть с ошибками.",
+ st:[["deals","сделок"],["participants","компаний"],["brokers","брокеров"]],stPeriod:"03.01.2022 – 30.10.2026",
+ cards:[["vol","Объёмы","Сколько хлопка-сырца продано в 2026 году?"],["price","Цены","Как менялась цена бензина АИ-92 по месяцам 2025?"],["people","Покупатели","Топ-5 покупателей карбамида"],["deal","Сделка","Расскажи о сделке № 400000"],["vol","Аннуляции","Сколько сделок аннулировано в 2024 году?"],["no","Чего нет в реестре","Какая цена пшеницы будет в декабре 2026?"]],
+ ph:"Спросите о сделках, ценах, компаниях…",phS:"Ваш вопрос о сделках…",hint:"Enter — отправить, Shift+Enter — новая строка",
+ s:{search:"Ищу в справочнике",found:"Нашёл",sql:"Считаю по реестру",rows:"строк"},
+ verified:n=>`Проверено: ${n} ${n==1?"запрос":n<5?"запроса":"запросов"}`,sec:"с",how:"Как посчитано",hide:"Скрыть",copy:"Копировать",copied:"Скопировано",more:"Можно спросить дальше",
+ chart:"Наглядно",rate:"Слишком много вопросов подряд. Подождите пару минут.",fail:"Не получилось ответить. Попробуйте ещё раз.",kinds:{company:"компания",broker:"брокер",product:"товар"},
+ short:["тыс","млн","млрд","трлн"],cur:{UZS:"сум",USD:"$"},unit:{"тонна":"т","килограмм":"кг","литр":"л","штука":"шт","куб.метр":"м³","кв.метр":"м²","метр":"м"}},
+uz:{tg:"Telegramda qulayroqmi? Xuddi shu tahlilchi @zenc_ai botida",brand:"Birja bitimlari tahlilchisi",online:"onlayn, reyestr boʻyicha hisoblaydi",new:"Yangi suhbat",
+ h1:"Salom! Birja bitimlari haqida soʻrang",lede:"2022–2026-yillar boʻyicha hajm, narx, ishtirokchi va brokerlarni hisoblab beraman hamda har bir raqam qayerdan olinganini koʻrsataman. Qanday qulay boʻlsa, shunday yozing, xatolar bilan ham.",
+ st:[["deals","ta bitim"],["participants","ta kompaniya"],["brokers","ta broker"]],stPeriod:"03.01.2022 – 30.10.2026",
+ cards:[["vol","Hajm","2026-yilda qancha paxta xomashyosi sotilgan?"],["price","Narxlar","2025-yilda AI-92 benzini narxi oylar boʻyicha"],["people","Xaridorlar","Karbamidning eng yirik 5 ta xaridori"],["deal","Bitim","400000-raqamli bitim haqida maʼlumot"],["vol","Bekor qilinganlar","2024-yilda nechta bitim bekor qilingan?"],["no","Reyestrda yoʻq","2026-yil dekabrida bugʻdoy narxi qancha boʻladi?"]],
+ ph:"Bitimlar, narxlar, kompaniyalar haqida soʻrang…",phS:"Bitimlar haqida savol…",hint:"Enter — yuborish, Shift+Enter — yangi qator",
+ s:{search:"Maʼlumotnomadan qidiryapman",found:"Topildi",sql:"Reyestr boʻyicha hisoblayapman",rows:"qator"},
+ verified:n=>`Tekshirildi: ${n} ta soʻrov`,sec:"s",how:"Qanday hisoblandi",hide:"Yashirish",copy:"Nusxa olish",copied:"Nusxa olindi",more:"Davom ettirish mumkin",
+ chart:"Koʻrgazmali",rate:"Savollar juda koʻp. Bir-ikki daqiqa kuting.",fail:"Javob berib boʻlmadi. Qayta urinib koʻring.",kinds:{company:"kompaniya",broker:"broker",product:"tovar"},
+ short:["ming","mln","mlrd","trln"],cur:{UZS:"soʻm",USD:"$"},unit:{"тонна":"t","килограмм":"kg","литр":"l","штука":"dona","куб.метр":"m³","кв.метр":"m²","метр":"m"}},
+uzc:{tg:"Telegramда қулайроқми? Худди шу таҳлилчи @zenc_ai ботида",brand:"Биржа битимлари таҳлилчиси",online:"онлайн, реестр бўйича ҳисоблайди",new:"Янги суҳбат",
+ h1:"Салом! Биржа битимлари ҳақида сўранг",lede:"2022–2026 йиллар бўйича ҳажм, нарх, иштирокчи ва брокерларни ҳисоблаб бераман ҳамда ҳар бир рақам қаердан олинганини кўрсатаман. Қандай қулай бўлса, шундай ёзинг, хатолар билан ҳам.",
+ st:[["deals","та битим"],["participants","та компания"],["brokers","та брокер"]],stPeriod:"03.01.2022 – 30.10.2026",
+ cards:[["vol","Ҳажм","2026 йилда қанча пахта хомашёси сотилган?"],["price","Нархлар","2025 йилда АИ-92 бензини нархи ойлар бўйича"],["people","Харидорлар","Карбамиднинг энг йирик 5 та харидори"],["deal","Битим","400000-рақамли битим ҳақида маълумот"],["vol","Бекор қилинганлар","2024 йилда нечта битим бекор қилинган?"],["no","Реестрда йўқ","2026 йил декабрида буғдой нархи қанча бўлади?"]],
+ ph:"Битимлар, нархлар, компаниялар ҳақида сўранг…",phS:"Битимлар ҳақида савол…",hint:"Enter — юбориш, Shift+Enter — янги қатор",
+ s:{search:"Маълумотномадан қидиряпман",found:"Топилди",sql:"Реестр бўйича ҳисоблаяпман",rows:"қатор"},
+ verified:n=>`Текширилди: ${n} та сўров`,sec:"с",how:"Қандай ҳисобланди",hide:"Яшириш",copy:"Нусха олиш",copied:"Нусха олинди",more:"Давом эттириш мумкин",
+ chart:"Кўргазмали",rate:"Саволлар жуда кўп. Бир-икки дақиқа кутинг.",fail:"Жавоб бериб бўлмади. Қайта уриниб кўринг.",kinds:{company:"компания",broker:"брокер",product:"товар"},
+ short:["минг","млн","млрд","трлн"],cur:{UZS:"сўм",USD:"$"},unit:{"тонна":"т","килограмм":"кг","литр":"л","штука":"дона","куб.метр":"м³","кв.метр":"м²","метр":"м"}}
+};
+const L2C = {"a":"а","b":"б","d":"д","e":"е","f":"ф","g":"г","h":"ҳ","i":"и","j":"ж","k":"к","l":"л","m":"м","n":"н","o":"о","p":"п","q":"қ","r":"р","s":"с","t":"т","u":"у","v":"в","x":"х","y":"й","z":"з"};
+const toCyr = s => s.replace(/oʻ|o‘/gi,"ў").replace(/gʻ|g‘/gi,"ғ").replace(/sh/gi,"ш").replace(/ch/gi,"ч").replace(/ya/gi,"я").replace(/yo/gi,"ё").replace(/yu/gi,"ю").replace(/[a-z]/gi,c=>{const r=L2C[c.toLowerCase()]||c;return c===c.toUpperCase()?r.toUpperCase():r});
+let lang = (()=>{try{return localStorage.getItem("uzex_lang")}catch(e){return null}})() || ((navigator.language||"").startsWith("uz")?"uz":"ru");
+let history = [], busy = false, stats = null, tape = [];
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const nf = (n, d=2) => Number(n).toLocaleString("ru-RU", {maximumFractionDigits: d});
+const short = n => { const a = Math.abs(n), s = T[lang].short;
+  if(a >= 1e12) return nf(n/1e12, 2)+" "+s[3]; if(a >= 1e9) return nf(n/1e9, 2)+" "+s[2];
+  if(a >= 1e6) return nf(n/1e6, 2)+" "+s[1]; if(a >= 1e4) return nf(n/1e3, 1)+" "+s[0]; return nf(n, 2); };
+function apply(){
+  const t = T[lang];
+  document.documentElement.lang = lang === "ru" ? "ru" : "uz";
+  try{localStorage.setItem("uzex_lang", lang)}catch(e){}
+  document.title = t.brand;
+  document.querySelectorAll("[data-t]").forEach(el => el.textContent = t[el.dataset.t]);
+  document.querySelectorAll(".seg button").forEach(b => b.setAttribute("aria-pressed", b.dataset.l === lang));
+  $("#q").placeholder = matchMedia("(max-width:620px)").matches ? t.phS : t.ph;
+  $("#cards").innerHTML = t.cards.map(([ic,cat,q]) => `<button class="card${ic==="no"?" no":""}" type="button" data-q="${esc(q)}"><i>${IC[ic]}</i><span><small>${esc(cat)}</small><div>${esc(q)}</div></span></button>`).join("");
+  document.querySelectorAll(".card").forEach(b => b.onclick = () => ask(b.dataset.q));
+  renderStats(); renderTape();
+}
+function renderStats(){
+  if(!stats) return; const t = T[lang];
+  $("#stats").innerHTML = t.st.map(([k,l]) => `<span><b>${nf(stats[k])}</b> ${esc(l)}</span>`).join("") + `<span>${t.stPeriod}</span>`;
+}
+function renderTape(){
+  if(!tape.length) return; const t = T[lang];
+  const items = tape.map(x => {
+    const name = lang==="ru" ? x.family : (lang==="uz" ? x.family_uz : toCyr(x.family_uz));
+    return `<span class="ti"><b>${esc(name)}${x.brand?" "+esc(x.brand):""}</b><em>${nf(x.price)} ${t.cur[x.currency]}/${t.unit[x.unit]||x.unit}</em><span>${esc(lang==="uzc"?toCyr(x.region):x.region)}</span></span>`;
+  }).join("");
+  $("#track").innerHTML = items + items;
+}
+document.querySelectorAll(".seg button").forEach(b => b.onclick = () => { lang = b.dataset.l; apply(); });
+$("#reset").onclick = () => { if(busy) return; history = []; $("#chat").innerHTML = ""; $("#hello").hidden = false; $("#reset").hidden = true; window.scrollTo({top:0}); $("#q").focus(); };
+fetch("/api/stats").then(r=>r.json()).then(d=>{stats=d; renderStats();}).catch(()=>{});
+fetch("/api/tape").then(r=>r.json()).then(d=>{tape=d; renderTape();}).catch(()=>{});
+function pickChart(steps){
+  const cands = steps.filter(s => s.tool==="run_sql" && s.result && s.result.columns && s.result.rows.length>=3 && s.result.rows.length<=20);
+  for(const s of cands.reverse()){
+    const {columns, rows} = s.result;
+    const isNum = i => rows.every(r => typeof r[i] === "number" || r[i] === null);
+    const timeCol = i => /^(year|month|quarter|y|m|q|yil|oy|chorak)$/i.test(columns[i]);
+    const labelIdx = columns.map((c,i)=>i).filter(i => (!isNum(i) || timeCol(i)) && !/inn|_code$|_id$/i.test(columns[i]));
+    const numIdx = columns.map((c,i)=>i).filter(i => isNum(i) && !timeCol(i) && !/inn|_id$|code|rank|^#$|pct|share|percent/i.test(columns[i]));
+    if(!labelIdx.length || !numIdx.length) continue;
+    const pref = numIdx.find(i => /uzs|sum|amount|total|turnover|summa/i.test(columns[i])) ?? numIdx.find(i => /price|vol|qty|^n$|cnt|count|deals/i.test(columns[i])) ?? numIdx[numIdx.length-1];
+    const data = rows.map(r => [labelIdx.slice(0,2).map(i => r[i]).filter(v => v!==null && v!=="").join(" · "), r[pref]]).filter(d => typeof d[1]==="number" && d[0]);
+    const labels = new Set(data.map(d=>d[0]));
+    if(data.length < 3 || labels.size < data.length || data.every(d => d[1]===data[0][1]) || data.some(d => d[1] < 0)) continue;
+    return {data, col: columns[pref]};
+  }
+  return null;
+}
+function chartHtml(c){
+  const max = Math.max(...c.data.map(d=>d[1])), t = T[lang];
+  return `<div class="chart"><h5>${t.chart}</h5>${c.data.map((d,i)=>`<div class="row"><span class="l" title="${esc(d[0])}">${esc(d[0])}</span><span class="b" style="width:${Math.max(2,d[1]/max*100)}%;animation-delay:${i*40}ms"></span><span class="v">${short(d[1])}</span></div>`).join("")}</div>`;
+}
+function resultTable(res){
+  if(!res || !res.columns) return "";
+  return `<div class="rt"><table><tr>${res.columns.map(c=>`<th>${esc(c)}</th>`).join("")}</tr>${res.rows.slice(0,12).map(r=>`<tr>${r.map(v=>`<td>${esc(typeof v==="number"?nf(v,4):v)}</td>`).join("")}</tr>`).join("")}</table><small>${res.row_count}${res.truncated?"+":""} ${T[lang].s.rows}, ${res.ms??0} ms</small></div>`;
+}
+function stepHtml(s, i){
+  const t = T[lang];
+  if(s.tool === "run_sql") return `<div class="q"><h4>${i}. SQL${s.input.purpose?` <span>${esc(s.input.purpose)}</span>`:""}</h4><pre>${esc(s.input.sql)}</pre>${s.result?.error?`<p class="err">${esc(s.result.error)}</p>`:resultTable(s.result)}</div>`;
+  const m = (s.result?.matches||[]).slice(0,5).map(x => esc(x.name||x.product_base) + (x.inn?`, ${x.inn}`:"") + (x.broker_code?`, ${x.broker_code}`:"")).join("\n");
+  return `<div class="q"><h4>${i}. ${t.s.search} <span>${t.kinds[s.input.kind]||""}: «${esc(s.input.query)}»</span></h4><pre>${m||"—"}</pre></div>`;
+}
+const stripFollow = s => s.replace(/\n*\s*FOLLOWUPS:[\s\S]*$/, "");
+async function ask(question){
+  question = (question||"").trim(); if(!question || busy) return;
+  busy = true; $("#send").disabled = true;
+  document.querySelectorAll(".sugg").forEach(e => e.remove());
+  $("#hello").hidden = true; $("#reset").hidden = false;
+  const t = T[lang], chat = $("#chat");
+  chat.insertAdjacentHTML("beforeend", `<div class="msg me"><div class="bub">${esc(question)}</div></div>`);
+  const wrap = document.createElement("div"); wrap.className = "msg";
+  wrap.innerHTML = `<div class="ava" aria-hidden="true">${IC.logo}</div><div class="ans"><ul class="steps"><li><span class="st"><i class="spin"></i></span><span>${t.s.search}…</span></li></ul><div class="md"></div></div>`;
+  chat.appendChild(wrap); wrap.scrollIntoView({behavior:"smooth", block:"end"});
+  const ans = wrap.querySelector(".ans"), md = wrap.querySelector(".md"), ul = wrap.querySelector(".steps");
+  let text = "", steps = [], done = null, first = true, cur = ul.firstElementChild;
+  const addStep = label => { const li = document.createElement("li"); li.innerHTML = `<span class="st"><i class="spin"></i></span><span>${esc(label)}…</span>`; ul.appendChild(li); return li; };
+  const finish = (li, label) => { li.className = "done"; li.innerHTML = `<span class="st">${IC.ok}</span><span>${esc(label)}</span>`; };
+  const draw = () => { md.innerHTML = DOMPurify.sanitize(marked.parse(stripFollow(text))); };
+  try{
+    const r = await fetch("/api/ask", {method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({question, history, lang})});
+    if(r.status === 429) throw new Error(t.rate);
+    if(!r.ok) throw new Error(t.fail);
+    const reader = r.body.getReader(), dec = new TextDecoder(); let buf = "";
+    for(;;){
+      const {value, done: end} = await reader.read(); if(end) break;
+      buf += dec.decode(value, {stream:true});
+      let k; while((k = buf.indexOf("\n\n")) >= 0){
+        const line = buf.slice(0, k); buf = buf.slice(k+2);
+        if(!line.startsWith("data: ")) continue;
+        const ev = JSON.parse(line.slice(6));
+        if(ev.type === "step"){
+          const label = ev.tool === "run_sql" ? (ev.input.purpose || t.s.sql) : `${t.s.search}: «${ev.input.query}»`;
+          if(first){ cur.lastElementChild.textContent = label + "…"; first = false; } else cur = addStep(label);
+          steps.push({tool:ev.tool, input:ev.input, li:cur, label});
+        } else if(ev.type === "step_result"){
+          const s = steps[steps.length-1]; s.result = ev.result; let label = s.label;
+          if(s.tool === "search_entities"){ const m = ev.result.matches?.[0]; if(m) label = `${t.s.found}: ${m.product_family || m.name}`; }
+          else if(ev.result.row_count !== undefined) label = `${s.label} (${ev.result.row_count} ${t.s.rows})`;
+          finish(s.li, label);
+        } else if(ev.type === "text"){ text += ev.text; draw(); }
+        else if(ev.type === "reset"){ text = ""; draw(); }
+        else if(ev.type === "done"){ done = ev; text = ev.answer || text; draw(); }
+        else if(ev.type === "error"){ throw new Error(t.fail); }
+      }
+    }
+    if(!stripFollow(text).trim()) throw new Error(t.fail);
+    ul.querySelectorAll("li:not(.done)").forEach(li => li.remove());
+    if(!ul.children.length) ul.remove(); else ul.classList.add("fin");
+    const c = pickChart(steps); if(c) md.insertAdjacentHTML("beforeend", chartHtml(c));
+    const nq = steps.filter(s => s.tool === "run_sql" && !s.result?.error).length;
+    const tools = document.createElement("div"); tools.className = "tools";
+    tools.innerHTML = (nq ? `<span class="seal">${IC.ok}${t.verified(nq)}</span>` : "") + `<span>${String(done?.seconds ?? "").replace(".", ",")} ${t.sec}</span><span class="grow"></span>` +
+      (steps.length ? `<button class="tbtn" data-a="how">${IC.code}<span>${t.how}</span></button>` : "") + `<button class="tbtn" data-a="copy">${IC.copy}<span>${t.copy}</span></button>`;
+    ans.appendChild(tools);
+    const app = document.createElement("div"); app.className = "appendix"; app.hidden = true;
+    app.innerHTML = steps.map((s,i) => stepHtml(s, i+1)).join(""); ans.appendChild(app);
+    const how = tools.querySelector('[data-a=how]');
+    if(how) how.onclick = () => { app.hidden = !app.hidden; how.lastElementChild.textContent = app.hidden ? t.how : t.hide; };
+    const cp = tools.querySelector('[data-a=copy]');
+    cp.onclick = async () => { try{ await navigator.clipboard.writeText(stripFollow(text)); cp.lastElementChild.textContent = t.copied; setTimeout(()=>cp.lastElementChild.textContent = t.copy, 1600);}catch(e){} };
+    if(done?.followups?.length){
+      const sg = document.createElement("div"); sg.className = "sugg"; sg.setAttribute("aria-label", t.more);
+      sg.innerHTML = done.followups.map(f => `<button type="button">${esc(f)}</button>`).join("");
+      sg.querySelectorAll("button").forEach(b => b.onclick = () => ask(b.textContent));
+      chat.appendChild(sg);
+    }
+    history.push({role:"user", content:question}, {role:"assistant", content:stripFollow(text)});
+  }catch(e){
+    ul.remove(); ans.classList.add("bad"); md.innerHTML = `<p>${esc(e.message)}</p>`;
+  }finally{
+    busy = false; $("#send").disabled = false;
+    if(matchMedia("(hover:hover)").matches) $("#q").focus();
+  }
+}
+const q = $("#q");
+q.addEventListener("input", () => { q.style.height = "auto"; q.style.height = Math.min(q.scrollHeight, 160) + "px"; });
+q.addEventListener("keydown", e => { if(e.key === "Enter" && !e.shiftKey && !e.isComposing){ e.preventDefault(); $("#form").requestSubmit(); } });
+$("#form").onsubmit = e => { e.preventDefault(); const v = q.value; q.value = ""; q.style.height = "auto"; ask(v); };
+marked.setOptions({breaks:true});
+apply();
+</script>
+</body>
+</html>

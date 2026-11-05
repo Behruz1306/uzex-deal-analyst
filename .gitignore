@@ -1,0 +1,11 @@
+.env
+.env.*
+.venv/
+data_raw/
+__pycache__/
+*.pyc
+.playwright-mcp/
+server.log
+*.log
+.DS_Store
+!.env.example
