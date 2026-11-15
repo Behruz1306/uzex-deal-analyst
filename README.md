@@ -62,3 +62,12 @@ cd app && uvicorn server:app --port 8080
 
 ## Стек
 Python 3.12 · DuckDB · Anthropic Claude (tool use, prompt caching) · FastAPI · SSE · RapidFuzz · Fly.io · Telegram Bot API
+
+## Лицензия / License
+
+[PolyForm Noncommercial 1.0.0](LICENSE). Код можно смотреть и использовать в некоммерческих целях (учёба, исследования, личные проекты) с сохранением указания автора.
+**Коммерческое использование — только по отдельному письменному договору с автором** ([@Behruz1306](https://github.com/Behruz1306)).
+
+Noncommercial use is permitted under PolyForm Noncommercial 1.0.0. Commercial use requires a separate written agreement with the author.
+
+Copyright (c) 2026 Bekhruz Abdurakhimov.
